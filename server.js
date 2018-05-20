@@ -4,6 +4,8 @@ fs = require("fs");
 
 var http = require('http');
 var https = require('https');
+var uuidv4 = require('uuid/v4');
+
 
 var DIST_DIR = path.join(__dirname, "dist"),
 PORT = 3000;
@@ -45,7 +47,9 @@ app.post("/create_widget", function(req, res) {
   var data = JSON.parse(fs.readFileSync(path.join(DIST_DIR, file), 'utf8'));
 
   var new_widget = {};
-  var key = req.body.topic;
+  var key = uuidv4();
+  new_widget.name = req.body.name;
+  new_widget.topic = req.body.topic;
   new_widget.type = req.body.topic_type;
   new_widget.msg_type = req.body.msg_type;
   new_widget.x = 250;
@@ -62,6 +66,7 @@ app.post("/create_widget", function(req, res) {
   var response = {}
   response.key = key;
   response.name = req.body.name;
+  response.topic = req.body.topic;
   response.type = req.body.topic_type;
   response.msg_type = req.body.msg_type;
   response.x = 250;
