@@ -6,6 +6,7 @@ import interact from 'interactjs';
 
 
 var editMode = false;
+var topics, types;
 
 $("#menu-toggle").click(function(e) {
   e.preventDefault();
@@ -14,11 +15,12 @@ $("#menu-toggle").click(function(e) {
 
 
 var ros = new ROSLIB.Ros({
-  url : 'ws://localhost:9090'
+  url : 'ws://192.168.1.11:9090'
 });
 
 // Create the main viewer.
-var viewer = new ROS3D.Viewer({
+
+/*var viewer = new ROS3D.Viewer({
   divID : 'urdf',
   width : 800,
   height : 600,
@@ -41,6 +43,41 @@ var urdfClient = new ROS3D.UrdfClient({
   rootObject : viewer.scene,
   loader : ROS3D.COLLADA_LOADER_2
 });
+*/
+
+
+var selected_topic = document.getElementById('topics');
+selected_topic.addEventListener('change', function() {
+  var index = selected_topic.selectedIndex;
+  var msg_type = $('#msg_type');
+  msg_type.val(types[index]);
+  console.log(types[index], index);
+});
+
+function getTopics() {
+
+  var topicsClient = new ROSLIB.Service({
+    ros : ros,
+    name : '/rosapi/topics',
+    serviceType : 'rosapi/Topics'
+  });
+
+  var request = new ROSLIB.ServiceRequest();
+
+  topicsClient.callService(request, function(result) {
+
+    topics = result.topics;
+    types = result.types;
+
+    var topic_select =  document.getElementById('topics');
+    for (var i = 0; i < topics.length; i++) {
+      var option = document.createElement("option");
+      option.value = topics[i];
+      option.text = topics[i];
+      topic_select.appendChild(option);
+    }
+  });
+};
 
 
 function addMessage(name, data) {
@@ -48,7 +85,7 @@ function addMessage(name, data) {
   var panel = document.getElementById(name);
   var output_div = panel.getElementsByClassName("output")[0];
 
-  output_div.innerHTML += data + "</br>";
+  output_div.innerHTML += JSON.stringify(data) + "</br>";
 }
 
 
@@ -77,11 +114,10 @@ ros.on('close', function() {
 
 
 function setPing() {
-  setInterval(function(){
+  setInterval(function() {
     console.log("PING");
   }, 1000);
 }
-
 
 function setWindow(name, x, y, width, height) {
 
@@ -139,6 +175,11 @@ function publishForm(event) {
   console.log("PUBLISHED")
   event.preventDefault();
 }
+
+$("#newWidgetButton").on('click', function() {
+  getTopics();
+
+});
 
 $("#newWidgetForm").submit(function(event) {
 
@@ -230,10 +271,7 @@ function createWidget(key, name, type, msg_type, x, y, width, height) {
   });
 
   listener.subscribe(function(message) {
-    console.log('Received message on ' + listener.name + ': ' + message.data);
-
-    addMessage(listener.name, message.data);
-    // listener.unsubscribe();
+    addMessage(listener.name, message);
   });
 
 }

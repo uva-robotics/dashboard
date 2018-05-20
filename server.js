@@ -2,6 +2,9 @@ var path = require("path"),
 express = require("express"),
 fs = require("fs");
 
+var http = require('http');
+var https = require('https');
+
 var DIST_DIR = path.join(__dirname, "dist"),
 PORT = 3000;
 
@@ -76,4 +79,7 @@ app.get("*", function (req, res) {
   res.sendFile(path.join(DIST_DIR, "index.html"));
 });
 
-app.listen(PORT);
+
+var httpServer = http.createServer(app);
+
+httpServer.listen(3000);

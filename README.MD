@@ -6,6 +6,9 @@ It uses ROS Bridge (websockets) to communicate.</br>
 This is still in heavy development.
 
 <img src="dashboard.png"/>
+</br></br>
+
+<img src="dashboard-anim.gif"/>
 
 ## Usage
 ```
