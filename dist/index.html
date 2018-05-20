@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Index</title>
+<link href="css/styles.css" rel="stylesheet"></head>
+
+<body onload="init()">
+
+  <div class="container-fluid h-100">
+
+    <div id="topbar" class="row top-nav-bar">
+      <div class="col-1">
+        <a href="#menu-toggle" id="menu-toggle">
+          <i class="fa fa-bars menu-toggle-icon"></i>
+        </a>
+      </div>
+      <div class="col-1">
+        <div id="ros-status"></div>
+      </div>
+      <div class="col-1">
+      </div>
+      <div class="col-1">
+      </div>
+      <div class="col-4 text-center">
+        <span class="app-title">UvA Intelligent Robotics Lab</span>
+      </div>
+      <div class="col-1">
+      </div>
+      <div class="col-1">
+      </div>
+      <div class="col-1">
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#widgetModal">New</button>
+      </div>
+      <div class="col-1">
+        <button id="editMode" type="button" class="btn btn-warning">Edit Mode</button>
+      </div>
+    </div>
+
+    <!-- Side navbar -->
+    <div id="wrapper" class="">
+      <div id="sidebar-wrapper">
+        <ul class="sidebar-nav">
+          <li class="sidebar-brand">
+            <a href="#">
+              ROS
+            </a>
+          </li>
+          <li>
+            <a href="#">Dashboard</a>
+          </li>
+          <li>
+            <a href="#">Poses</a>
+          </li>
+          <li>
+            <a href="#">Teleop</a>
+          </li>
+          <li>
+            <a href="#">Events</a>
+          </li>
+        </ul>
+      </div>
+
+      <div id="page-content-wrapper">
+
+
+        <div class="modal fade" id="widgetModal" tabindex="-1" role="dialog" aria-labelledby="widgetModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="widgetModalLabel">New widget</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <form id="newWidgetForm">
+                  <div class="form-group">
+                    <label for="topic_type">Type</label>
+                    <select name="topic_type" class="form-control" id="topic_type">
+                      <option value="0">Publisher</option>
+                      <option value="1">Subscriber</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label for="topic" class="col-form-label">Topic</label>
+                    <input name="topic" type="text" class="form-control" id="topic">
+                  </div>
+                  <div class="form-group">
+                    <label for="name" class="col-form-label">Name</label>
+                    <input name="name" class="form-control" id="name"></input>
+                  </div>
+                  <div class="form-group">
+                    <label for="msg_type" class="col-form-label">Message type</label>
+                    <select name="msg_type" class="form-control" id="msg_type">
+                      <option>std_msgs/String</option>
+                      <option>rosgraph_msgs/Log</option>
+                    </select>
+                  </div>
+                </form>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary" form="newWidgetForm">Add</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <h1>ROS Control</h1>
+        <div id="widgets">
+          <div id="urdf" class="draggable dragging-container" draggable="1">
+          </div>
+        </div>
+
+
+      </div>
+    </div>
+  </div>
+  <script src="https://static.robotwebtools.org/threejs/current/three.js"></script>
+  <script src="https://static.robotwebtools.org/threejs/current/ColladaLoader.js"></script>
+  <script src="https://static.robotwebtools.org/threejs/current/STLLoader.js"></script>
+  <script src="https://static.robotwebtools.org/EventEmitter2/current/eventemitter2.min.js"></script>
+  <script src="https://static.robotwebtools.org/roslibjs/current/roslib.js"></script>
+  <script src="https://static.robotwebtools.org/ros3djs/current/ros3d.min.js"></script>
+<script type="text/javascript" src="app.bundle.js"></script></body>
+</html>

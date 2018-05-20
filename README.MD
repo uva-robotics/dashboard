@@ -5,6 +5,8 @@ This is a web user interface for our ROS-enabled robots. You can drag and drop p
 It uses ROS Bridge (websockets) to communicate.</br>
 This is still in heavy development.
 
+<img src="dashboard.png"/>
+
 ## Usage
 ```
 npm install
